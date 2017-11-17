@@ -111,10 +111,10 @@ public class DWUpdateFileTask extends Task.Backgroundable {
         try (CloseableHttpResponse response = httpClient.execute(request, context)) {
             if (isNewRemoteFile) {
                 Date now = new Date();
-                consoleView.print("[" + timeFormat.format(now) + "] " + "Created " + request.getURI().toString() + "\n", ConsoleViewContentType.NORMAL_OUTPUT);
+                consoleView.print("[" + timeFormat.format(now) + "] " + "Created file in server " + request.getURI().toString() + "\n", ConsoleViewContentType.NORMAL_OUTPUT);
             } else {
                 Date now = new Date();
-                consoleView.print("[" + timeFormat.format(now) + "] " + "Updated " + request.getURI().toString() + "\n", ConsoleViewContentType.NORMAL_OUTPUT);
+                consoleView.print("[" + timeFormat.format(now) + "] " + "Updated file in server " + request.getURI().toString() + "\n", ConsoleViewContentType.NORMAL_OUTPUT);
             }
         } catch (IOException e) {
             LOG.error(e);

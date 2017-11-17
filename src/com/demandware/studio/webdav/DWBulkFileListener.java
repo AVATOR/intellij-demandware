@@ -67,6 +67,7 @@ public class DWBulkFileListener implements ApplicationComponent, BulkFileListene
                         }
 
                         if (CurrentModuleType instanceof DWModuleType) {
+//                            for (VirtualFile sourceRoot : ModuleRootManager.getInstance(module).getContentRoots()) {
                             for (VirtualFile sourceRoot : ModuleRootManager.getInstance(module).getSourceRoots()) {
                                 if (eventFile.getPath().contains(sourceRoot.getPath())) {
                                     ProgressManager.getInstance().run(

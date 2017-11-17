@@ -1,7 +1,5 @@
 package com.demandware.studio.settings;
 
-import com.intellij.ide.passwordSafe.PasswordSafe;
-import com.intellij.ide.passwordSafe.PasswordSafeException;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
@@ -45,22 +43,11 @@ public class DWSettingsProvider implements PersistentStateComponent<DWSettingsPr
     }
 
     public String getPassword() {
-        String password;
-        try {
-            password = PasswordSafe.getInstance().getPassword(null, DWSettingsProvider.class, myState.passwordKey);
-        } catch (PasswordSafeException e) {
-            LOG.info("Couldn't get password for key " + myState.passwordKey, e);
-            password = "";
-        }
-        return StringUtil.notNullize(password);
+        return myState.password;
     }
 
     public void setPassword(String password) {
-        try {
-            PasswordSafe.getInstance().storePassword(null, DWSettingsProvider.class, myState.passwordKey, password != null ? password : "");
-        } catch (PasswordSafeException e) {
-            LOG.info("Couldn't set password for key " + myState.passwordKey, e);
-        }
+        myState.password = password;
     }
 
     public String getVersion() {
@@ -79,14 +66,6 @@ public class DWSettingsProvider implements PersistentStateComponent<DWSettingsPr
         myState.autoUploadEnabled = autoUploadEnabled;
     }
 
-    public String getPasswordKey() {
-        return myState.passwordKey;
-    }
-
-    public void setPasswordKey(String passwordKey) {
-        myState.passwordKey = passwordKey;
-    }
-
     @Override
     public State getState() {
         return myState;
@@ -96,7 +75,7 @@ public class DWSettingsProvider implements PersistentStateComponent<DWSettingsPr
     public void loadState(State state) {
         myState.hostname = state.hostname;
         myState.username = state.username;
-        myState.passwordKey = state.passwordKey;
+        myState.password = state.password;
         myState.version = state.version;
         myState.autoUploadEnabled = state.autoUploadEnabled;
     }
@@ -104,7 +83,7 @@ public class DWSettingsProvider implements PersistentStateComponent<DWSettingsPr
     public static class State {
         public String hostname;
         public String username;
-        public String passwordKey = UUID.randomUUID().toString();
+        public String password;
         public String version;
         public boolean autoUploadEnabled;
     }

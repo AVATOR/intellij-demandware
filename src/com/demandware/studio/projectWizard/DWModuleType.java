@@ -36,10 +36,10 @@ public class DWModuleType extends ModuleType<DWModuleBuilder> {
         return "Demandware Studio Module";
     }
 
-    @Override
-    public Icon getBigIcon() {
-        return IconLoader.getIcon("/icons/demandware.png");
-    }
+//    @Override
+//    public Icon getBigIcon() {
+//        return IconLoader.getIcon("/icons/demandware.png");
+//    }
 
     @Override
     public Icon getNodeIcon(@Deprecated boolean isOpened) {
