@@ -72,7 +72,7 @@ public class DWServerConnection {
     public String getRemoteFilePath(String rootPath, String filePath) {
         String relPath = filePath.substring(rootPath.length(), filePath.length());
         String cartridgeName = getCartridgeName(rootPath);
-        return getBaseServerPath()  + relPath;
+        return getBaseServerPath() + "/" + cartridgeName + relPath;
     }
 
     /*
@@ -87,7 +87,7 @@ public class DWServerConnection {
         String dirPath = "";
         for (Path subPath : relPath) {
             dirPath = dirPath + "/" + subPath.getFileName();
-            serverPaths.add(getBaseServerPath() + dirPath);
+            serverPaths.add(getBaseServerPath() + "/" + cartridgeName + dirPath);
         }
 
         return serverPaths;
