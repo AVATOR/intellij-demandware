@@ -1,79 +1,89 @@
 <idea-plugin version="2">
-  <id>com.demandware.studio</id>
-  <name>Demandware Studio Plugin</name>
-  <version>0.1.0</version>
-  <vendor email="nek4life@gmail.com">Charlie Choiniere</vendor>
+    <id>com.demandware.studio</id>
+    <name>Demandware Studio Plugin</name>
+    <version>0.1.0</version>
+    <vendor email="oleksii.v.golub@gmail.com">Oleksii Golub</vendor>
 
-  <description><![CDATA[
+    <description><![CDATA[
       Demandware development tools. JDK8+ Required.
     ]]></description>
 
-  <change-notes><![CDATA[
+    <change-notes><![CDATA[
       Still on the way to version 1.0.
     ]]>
-  </change-notes>
+    </change-notes>
 
-  <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
-  <idea-version since-build="131"/>
+    <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
+    <idea-version since-build="131"/>
 
-  <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
-       on how to target different products -->
-  <depends>com.intellij.modules.lang</depends>
+    <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
+         on how to target different products -->
+    <depends>com.intellij.modules.lang</depends>
 
-  <extensions defaultExtensionNs="com.intellij">
-    <!-- Module Extensions -->
-    <projectService serviceImplementation="com.demandware.studio.toolWindow.DWConsoleService"/>
-    <moduleType id="DW_MODULE" implementationClass="com.demandware.studio.projectWizard.DWModuleType"/>
-    <moduleService serviceImplementation="com.demandware.studio.settings.DWSettingsProvider"/>
-    <moduleService serviceImplementation="com.demandware.studio.webdav.DWServerConnection"/>
-    <toolWindow id="Demandware" icon="/icons/demandwareAction.png" anchor="bottom" factoryClass="com.demandware.studio.toolWindow.DWToolWindowFactory"/>
-    <facetType implementation="com.demandware.studio.facet.DWFacetType"/>
-    <frameworkSupport implementation="com.demandware.studio.facet.DWFrameworkSupportProvider"/>
-    <!-- ISML Extensions-->
-    <fileTypeFactory implementation="com.demandware.studio.isml.ISMLLanguageTypeFactory"/>
-    <xml.tagNameProvider implementation="com.demandware.studio.isml.codeInsight.tags.ISMLTagDescriptorsProvider"/>
-    <xml.elementDescriptorProvider implementation="com.demandware.studio.isml.codeInsight.tags.ISMLTagDescriptorsProvider"/>
-    <defaultLiveTemplatesProvider implementation="com.demandware.studio.isml.ISMLTemplatesProvider"/>
-    <!-- DS Extensions-->
-    <iconProvider implementation="com.demandware.studio.ds.DSIconProvider" />
-  </extensions>
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Module Extensions -->
+        <projectService serviceImplementation="com.demandware.studio.toolWindow.DWConsoleService"/>
+        <moduleType id="DW_MODULE" implementationClass="com.demandware.studio.projectWizard.DWModuleType"/>
+        <moduleService serviceImplementation="com.demandware.studio.settings.DWSettingsProvider"/>
+        <moduleService serviceImplementation="com.demandware.studio.webdav.DWServerConnection"/>
+        <toolWindow id="Demandware" icon="/icons/demandwareAction.png" anchor="bottom"
+                    factoryClass="com.demandware.studio.toolWindow.DWToolWindowFactory"/>
+        <facetType implementation="com.demandware.studio.facet.DWFacetType"/>
+        <frameworkSupport implementation="com.demandware.studio.facet.DWFrameworkSupportProvider"/>
+        <!-- ISML Extensions-->
+        <fileTypeFactory implementation="com.demandware.studio.isml.ISMLLanguageTypeFactory"/>
+        <xml.tagNameProvider implementation="com.demandware.studio.isml.codeInsight.tags.ISMLTagDescriptorsProvider"/>
+        <xml.elementDescriptorProvider
+                implementation="com.demandware.studio.isml.codeInsight.tags.ISMLTagDescriptorsProvider"/>
+        <defaultLiveTemplatesProvider implementation="com.demandware.studio.isml.ISMLTemplatesProvider"/>
+        <!-- DS Extensions-->
+        <iconProvider implementation="com.demandware.studio.ds.DSIconProvider"/>
+    </extensions>
 
-  <application-components>
-    <!-- Add your application components here -->
-    <component>
-      <implementation-class>com.demandware.studio.webdav.DWBulkFileListener</implementation-class>
-    </component>
-    <component>
-      <implementation-class>com.demandware.studio.ds.DSFileTypeAssociator</implementation-class>
-    </component>
-  </application-components>
+    <application-components>
+        <!-- Add your application components here -->
+        <component>
+            <implementation-class>com.demandware.studio.webdav.DWBulkFileListener</implementation-class>
+        </component>
+        <component>
+            <implementation-class>com.demandware.studio.ds.DSFileTypeAssociator</implementation-class>
+        </component>
+    </application-components>
 
-  <project-components>
-    <!-- Add your project components here -->
-  </project-components>
+    <project-components>
+        <!-- Add your project components here -->
+    </project-components>
 
-  <actions>
-    <group id="DWActionGroup" text="Demandware" popup="true">
-      <add-to-group group-id="ProjectViewPopupMenu" anchor="last" />
-      <add-to-group group-id="EditorPopupMenu" anchor="last"/>
-    </group>
+    <actions>
+        <group id="DWActionGroup" text="Demandware" popup="true">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </group>
 
-    <action id="com.demandware.studio.webdav.clean.DWCleanAction" class="com.demandware.studio.webdav.clean.DWCleanAction"
-            text="Clean Cartridges" description="Clean Cartridges" icon="/icons/demandwareAction.png">
-      <add-to-group group-id="BuildMenu" anchor="last"/>
+        <!-- Configuration action -->
+        <action id="DWConfigurationAction" class="com.demandware.studio.action.DWConfigurationAction"
+                text="Demandware Configuration"
+                icon="/icons/demandwareAction.png">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
 
-      <add-to-group group-id="DWActionGroup" />
-    </action>
+        <!-- Clean Cartridges action -->
+        <action id="com.demandware.studio.webdav.clean.DWCleanAction"
+                class="com.demandware.studio.webdav.clean.DWCleanAction"
+                text="Clean Cartridges" description="Clean Cartridges" icon="/icons/demandwareAction.png">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
 
-    <action class="com.demandware.studio.templates.DWCreateISMLFileAction" id="DWCreateISMLFile">
-      <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFromTemplate"/>
-    </action>
+            <add-to-group group-id="DWActionGroup"/>
+        </action>
 
-    <action class="com.demandware.studio.templates.DWCreateDSFileAction" id="DWCreateDSFile">
-      <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFromTemplate"/>
-    </action>
-  </actions>
+        <action class="com.demandware.studio.templates.DWCreateISMLFileAction" id="DWCreateISMLFile">
+            <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFromTemplate"/>
+        </action>
 
+        <action class="com.demandware.studio.templates.DWCreateDSFileAction" id="DWCreateDSFile">
+            <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFromTemplate"/>
+        </action>
+    </actions>
 
 
 </idea-plugin>
