@@ -105,6 +105,7 @@
         <properties>
           <horizontalAlignment value="2"/>
           <horizontalTextPosition value="11"/>
+          <selected value="true"/>
           <text value=""/>
         </properties>
       </component>

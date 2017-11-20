@@ -71,12 +71,12 @@ public class DWUpdateFileTask extends Task.Backgroundable {
 
             if (response.getStatusLine().getStatusCode() == 401) {
                 Notifications.Bus.notify(new Notification("Demandware", "Unauthorized Request",
-                    "Please check your server configuration in the Demandware facet settings.", NotificationType.INFORMATION));
+                    "Please check your server configuration in the Tools -> 'Demandware Configuration'.", NotificationType.ERROR));
                 return;
             }
         } catch (UnknownHostException e) {
             Notifications.Bus.notify(new Notification("Demandware", "Unknown Host",
-                "Please check your server configuration in the Demandware facet settings.", NotificationType.INFORMATION));
+                "Please check your server configuration in the Tools -> 'Demandware Configuration'", NotificationType.ERROR));
             return;
         } catch (IOException e) {
             e.printStackTrace();
