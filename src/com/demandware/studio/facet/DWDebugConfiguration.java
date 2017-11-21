@@ -1,20 +1,15 @@
 package com.demandware.studio.facet;
 
 import com.demandware.studio.settings.DWSettingsProvider;
+import com.demandware.studio.utils.DWHelper;
 import com.intellij.facet.Facet;
-import com.intellij.facet.ui.FacetEditorContext;
 import com.intellij.facet.ui.FacetEditorTab;
-import com.intellij.openapi.module.Module;
 import com.intellij.openapi.options.ConfigurationException;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.project.ProjectManager;
-import com.intellij.openapi.roots.ProjectRootManager;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import javax.swing.*;
 
 public class DWDebugConfiguration extends FacetEditorTab {
-//    private final DWSettingsProvider mySettingsProvider;
     private JTextField hostnameField;
     private JTextField usernameField;
     private JTextField passwordField;
@@ -54,11 +49,30 @@ public class DWDebugConfiguration extends FacetEditorTab {
     }
 
     public JPanel createPanel() {
-        setHostnameField("Host");
-        setUsernameField("user");
-        setPasswordField("pass");
-        setSite("site");
+        DWSettingsProvider dwSettings = DWHelper.getInstance().getDWSettings();
+        setHostnameField(dwSettings.getHostname());
+        setUsernameField(dwSettings.getUsername());
+        setPasswordField(dwSettings.getPassword());
+        setSite(dwSettings.getSite());
+
         return DWDebugConfiguration;
+    }
+
+    @Override
+    public void onFacetInitialized(@NotNull Facet facet) {
+        super.onFacetInitialized(facet);
+    }
+
+    @Override
+    public void onTabEntering() {
+        super.onTabEntering();
+        String a = "123";
+    }
+
+    @Override
+    public void apply() throws ConfigurationException {
+        super.apply();
+        String a = "123";
     }
 
     @NotNull
@@ -69,6 +83,7 @@ public class DWDebugConfiguration extends FacetEditorTab {
 
     @Override
     public boolean isModified() {
+        String a = "123";
         return false;
     }
 
@@ -78,11 +93,4 @@ public class DWDebugConfiguration extends FacetEditorTab {
         return null;
     }
 
-    public DWDebugConfiguration() {
-//        Project[] projects = ProjectManager.getInstance().getOpenProjects();
-//        for (Project project : projects) {
-//            Module module = ProjectRootManager.getInstance(project).getFileIndex().getModuleForFile(eventFile);
-//        }
-//        mySettingsProvider = DWSettingsProvider.getInstance(editorContext.getModule());
-    }
 }

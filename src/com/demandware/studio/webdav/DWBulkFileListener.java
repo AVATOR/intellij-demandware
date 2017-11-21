@@ -2,6 +2,7 @@ package com.demandware.studio.webdav;
 
 import com.demandware.studio.projectWizard.DWModuleType;
 import com.demandware.studio.settings.DWSettingsProvider;
+import com.demandware.studio.utils.DWHelper;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.diagnostic.Logger;
@@ -45,19 +46,8 @@ public class DWBulkFileListener implements ApplicationComponent, BulkFileListene
 
     @Override
     public void before(@NotNull List<? extends VFileEvent> events) {
-        for (VFileEvent event : events) {
-            VirtualFile virtualFile = event.getFile();
-            Project[] projects = ProjectManager.getInstance().getOpenProjects();
-
-            if (virtualFile != null && virtualFile.isInLocalFileSystem()) {
-                for (Project project : projects) {
-                    Module module = ProjectRootManager.getInstance(project).getFileIndex().getModuleForFile(virtualFile);
-//                    if (module != null && ModuleType.get(module).getId().equals(DWModuleType.getID())) {
-                        System.out.println(virtualFile.getCanonicalPath());
-//                    }
-                }
-            }
-        }
+        Project[] projects = ProjectManager.getInstance().getOpenProjects();
+        DWHelper.getInstance().setProject(projects[0]);
     }
 
     @Override
@@ -80,7 +70,6 @@ public class DWBulkFileListener implements ApplicationComponent, BulkFileListene
                         }
 
                         if (CurrentModuleType instanceof DWModuleType) {
-//                            for (VirtualFile sourceRoot : ModuleRootManager.getInstance(module).getContentRoots()) {
                             for (VirtualFile sourceRoot : ModuleRootManager.getInstance(module).getSourceRoots()) {
                                 if (eventFile.getPath().contains(sourceRoot.getPath())) {
                                     ProgressManager.getInstance().run(

@@ -10,8 +10,7 @@ public class DWConfigurationAction extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-        DWHelper dwHelper = new DWHelper();
-        DWSettingsProvider dwSettings = dwHelper.getDWSettings(e.getProject());
+        DWSettingsProvider dwSettings = DWHelper.getInstance().getDWSettings(e.getProject());
 
         // show dialog with form
         DWConfigurationDialog dlgWrapper = new DWConfigurationDialog(dwSettings);

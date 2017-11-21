@@ -13,13 +13,11 @@ import javax.swing.*;
 public class DWSettingsEditor extends SettingsEditor<DWRunConfiguration> {
 
     @Override
-    protected void resetEditorFrom(@NotNull DWRunConfiguration dwRunConfiguration) {
-        String a = "1";
-    }
+    protected void resetEditorFrom(@NotNull DWRunConfiguration dwRunConfiguration) {}
 
     @Override
     protected void applyEditorTo(@NotNull DWRunConfiguration dwRunConfiguration) throws ConfigurationException {
-        String a = "1";
+        String a = "123";
     }
 
     @NotNull
