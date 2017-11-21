@@ -33,4 +33,6 @@ public class DWFrameworkSupportProvider extends FrameworkSupportProvider {
     public boolean isEnabledForModuleType(@NotNull ModuleType moduleType) {
         return moduleType instanceof DWModuleType;
     }
+
+
 }

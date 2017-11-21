@@ -38,6 +38,9 @@
         <defaultLiveTemplatesProvider implementation="com.demandware.studio.isml.ISMLTemplatesProvider"/>
         <!-- DS Extensions-->
         <iconProvider implementation="com.demandware.studio.ds.DSIconProvider"/>
+
+        <!-- Debugger Section -->
+        <configurationType implementation="com.demandware.studio.idea.debug.DWRunConfigurationType"/>
     </extensions>
 
     <application-components>

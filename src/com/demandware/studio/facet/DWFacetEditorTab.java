@@ -93,12 +93,11 @@ public class DWFacetEditorTab extends FacetEditorTab {
     @Override
     public boolean isModified() {
         return !getHostname().equals(mySettingsProvider.getHostname()) ||
-            !getUsername().equals(mySettingsProvider.getUsername()) ||
-            !getPassword().equals(mySettingsProvider.getPassword()) ||
-            !getVersion().equals(mySettingsProvider.getVersion()) ||
-            !getAutoUploadEnabled() == mySettingsProvider.getAutoUploadEnabled();
+                !getUsername().equals(mySettingsProvider.getUsername()) ||
+                !getPassword().equals(mySettingsProvider.getPassword()) ||
+                !getVersion().equals(mySettingsProvider.getVersion()) ||
+                !getAutoUploadEnabled() == mySettingsProvider.getAutoUploadEnabled();
     }
-
 
     @Override
     public void disposeUIResources() {

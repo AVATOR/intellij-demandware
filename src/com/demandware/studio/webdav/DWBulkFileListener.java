@@ -45,6 +45,19 @@ public class DWBulkFileListener implements ApplicationComponent, BulkFileListene
 
     @Override
     public void before(@NotNull List<? extends VFileEvent> events) {
+        for (VFileEvent event : events) {
+            VirtualFile virtualFile = event.getFile();
+            Project[] projects = ProjectManager.getInstance().getOpenProjects();
+
+            if (virtualFile != null && virtualFile.isInLocalFileSystem()) {
+                for (Project project : projects) {
+                    Module module = ProjectRootManager.getInstance(project).getFileIndex().getModuleForFile(virtualFile);
+//                    if (module != null && ModuleType.get(module).getId().equals(DWModuleType.getID())) {
+                        System.out.println(virtualFile.getCanonicalPath());
+//                    }
+                }
+            }
+        }
     }
 
     @Override
