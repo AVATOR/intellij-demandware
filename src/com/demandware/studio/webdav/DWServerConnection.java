@@ -27,11 +27,15 @@ import java.security.UnrecoverableKeyException;
 import java.util.ArrayList;
 
 public class DWServerConnection {
-    private final DWSettingsProvider settingsProvider;
-    private final CloseableHttpClient client;
-    private final HttpClientContext context;
+    private DWSettingsProvider settingsProvider;
+    private CloseableHttpClient client;
+    private HttpClientContext context;
 
     public DWServerConnection(DWSettingsProvider settingsProvider) throws UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+        connectToServer(settingsProvider);
+    }
+
+    public HttpClientContext connectToServer(DWSettingsProvider settingsProvider) throws UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         this.settingsProvider = settingsProvider;
 
         // SSLContextFactory to allow all hosts. Without this an SSLException is thrown with self signed certs
@@ -44,12 +48,14 @@ public class DWServerConnection {
         connectionManager.setMaxTotal(15);
         connectionManager.setDefaultMaxPerRoute(3);
 
-        client = HttpClients.custom()
+        this.client = HttpClients.custom()
                 .setConnectionManager(connectionManager)
                 .build();
 
-        context = new HttpClientContext();
-        context.setCredentialsProvider(getCredientials());
+        this.context = new HttpClientContext();
+        this.context.setCredentialsProvider(getCredientials());
+
+        return this.context;
     }
 
     /*
