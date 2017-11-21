@@ -59,23 +59,28 @@
 
     <actions>
         <group id="DWActionGroup" text="Demandware" popup="true">
-            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </group>
+        <group id="DWGroup" text="Demandware" popup="true"
+               icon="/icons/demandwareAction.png">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+            <!--<add-to-group group-id="EditorPopupMenu" anchor="last"/>-->
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
         </group>
 
         <!-- Configuration action -->
         <action id="DWConfigurationAction" class="com.demandware.studio.action.DWConfigurationAction"
                 text="Demandware Configuration"
-                icon="/icons/demandwareAction.png">
-            <add-to-group group-id="ToolsMenu" anchor="last"/>
+                icon="/icons/demandwareConfiguration.png">
+            <add-to-group group-id="DWGroup"/>
         </action>
 
         <!-- Clean Cartridges action -->
         <action id="com.demandware.studio.webdav.clean.DWCleanAction"
                 class="com.demandware.studio.webdav.clean.DWCleanAction"
-                text="Clean Cartridges" description="Clean Cartridges" icon="/icons/demandwareAction.png">
-            <add-to-group group-id="ToolsMenu" anchor="last"/>
+                text="Clean Cartridges" description="Clean Cartridges">
 
+            <add-to-group group-id="DWGroup"/>
             <add-to-group group-id="DWActionGroup"/>
         </action>
 
