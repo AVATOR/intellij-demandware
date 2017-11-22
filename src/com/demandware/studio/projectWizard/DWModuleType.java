@@ -18,6 +18,10 @@ public class DWModuleType extends ModuleType<DWModuleBuilder> {
         return (DWModuleType) ModuleTypeManager.getInstance().findByID(ID);
     }
 
+    public Icon getBigIcon() {
+        return IconLoader.getIcon("/icons/demandware.png");
+    }
+
     @NotNull
     @Override
     public DWModuleBuilder createModuleBuilder() {
@@ -34,11 +38,6 @@ public class DWModuleType extends ModuleType<DWModuleBuilder> {
     @Override
     public String getDescription() {
         return "Demandware Studio Module";
-    }
-
-    @Override
-    public Icon getBigIcon() {
-        return IconLoader.getIcon("/icons/demandware.png");
     }
 
     @Override

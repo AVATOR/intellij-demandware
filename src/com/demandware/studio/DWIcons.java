@@ -9,4 +9,5 @@ public class DWIcons {
     public static final Icon DW_ACTION_ICON = IconLoader.getIcon("/icons/demandwareAction.png");
     public static final Icon DW_ISML_ICON = IconLoader.getIcon("/icons/demandwareISML.png");
     public static final Icon DW_DS_ICON = IconLoader.getIcon("/icons/demandwareScript.png");
+    public static final Icon DW_CONFIGURATION = IconLoader.getIcon("/icons/demandwareConfiguration.png");
 }

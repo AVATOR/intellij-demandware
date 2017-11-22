@@ -71,12 +71,12 @@ public class DWUpdateFileTask extends Task.Backgroundable {
 
             if (response.getStatusLine().getStatusCode() == 401) {
                 Notifications.Bus.notify(new Notification("Demandware", "Unauthorized Request",
-                    "Please check your server configuration in the Demandware facet settings.", NotificationType.INFORMATION));
+                    "Please check your server configuration in the Tools -> 'Demandware Configuration'.", NotificationType.ERROR));
                 return;
             }
         } catch (UnknownHostException e) {
             Notifications.Bus.notify(new Notification("Demandware", "Unknown Host",
-                "Please check your server configuration in the Demandware facet settings.", NotificationType.INFORMATION));
+                "Please check your server configuration in the Tools -> 'Demandware Configuration'", NotificationType.ERROR));
             return;
         } catch (IOException e) {
             e.printStackTrace();
@@ -111,10 +111,10 @@ public class DWUpdateFileTask extends Task.Backgroundable {
         try (CloseableHttpResponse response = httpClient.execute(request, context)) {
             if (isNewRemoteFile) {
                 Date now = new Date();
-                consoleView.print("[" + timeFormat.format(now) + "] " + "Created " + request.getURI().toString() + "\n", ConsoleViewContentType.NORMAL_OUTPUT);
+                consoleView.print("[" + timeFormat.format(now) + "] " + "Created file in server " + request.getURI().toString() + "\n", ConsoleViewContentType.NORMAL_OUTPUT);
             } else {
                 Date now = new Date();
-                consoleView.print("[" + timeFormat.format(now) + "] " + "Updated " + request.getURI().toString() + "\n", ConsoleViewContentType.NORMAL_OUTPUT);
+                consoleView.print("[" + timeFormat.format(now) + "] " + "Updated file in server " + request.getURI().toString() + "\n", ConsoleViewContentType.NORMAL_OUTPUT);
             }
         } catch (IOException e) {
             LOG.error(e);
