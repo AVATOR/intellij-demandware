@@ -35,6 +35,14 @@ public class DWServerConnection {
         connectToServer(settingsProvider);
     }
 
+    /**
+     * @param settingsProvider
+     * @return
+     * @throws UnrecoverableKeyException
+     * @throws NoSuchAlgorithmException
+     * @throws KeyStoreException
+     * @throws KeyManagementException
+     */
     public HttpClientContext connectToServer(DWSettingsProvider settingsProvider) throws UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         this.settingsProvider = settingsProvider;
 
@@ -58,7 +66,7 @@ public class DWServerConnection {
         return this.context;
     }
 
-    /*
+    /**
      * Returns the base path to the demandware server instance to make connections to webdav.
      */
     public String getBaseServerPath() {
@@ -70,7 +78,7 @@ public class DWServerConnection {
         return Paths.get(rootPath).getFileName().toString();
     }
 
-    /*
+    /**
      * Returns the remote file path for the current file path.
      * @param rootPath the source root path for the current file
      * @param filePath the full file path of the current file
@@ -81,39 +89,47 @@ public class DWServerConnection {
         return getBaseServerPath() + "/" + cartridgeName + relPath;
     }
 
-    /*
+    /**
      * Returns all the remote directory paths based on the current file path. This is to be used to create
      * any directories that have not yet been created before attempting to upload the file.
+     *
+     * @param rootPath
+     * @param filePath
+     * @return
      */
     public ArrayList<String> getRemoteDirPaths(String rootPath, String filePath) {
         ArrayList<String> serverPaths = new ArrayList<>();
         Path relPath = Paths.get(rootPath).relativize(Paths.get(filePath)).getParent();
         String cartridgeName = getCartridgeName(rootPath);
 
-        String dirPath = "";
-        for (Path subPath : relPath) {
-            dirPath = dirPath + "/" + subPath.getFileName();
-            serverPaths.add(getBaseServerPath() + "/" + cartridgeName + dirPath);
+        if (relPath != null) {
+            String dirPath = "";
+            for (Path subPath : relPath) {
+                dirPath = dirPath + "/" + subPath.getFileName();
+                serverPaths.add(getBaseServerPath() + "/" + cartridgeName + dirPath);
+            }
+        } else {
+            serverPaths.add(getBaseServerPath() + "/" + cartridgeName);
         }
 
         return serverPaths;
     }
 
-    /*
+    /**
      * Returns a closeable http client
      */
     public CloseableHttpClient getClient() {
         return client;
     }
 
-    /*
+    /**
      * Returns an http client context
      */
     public HttpClientContext getContext() {
         return context;
     }
 
-    /*
+    /**
      * Returns a credentials provider for the http client using the plugins settings provider
      * to supply the hostname, username and password.
      */
