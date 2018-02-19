@@ -20,6 +20,7 @@ import com.intellij.openapi.vfs.newvfs.events.VFileEvent;
 import com.intellij.util.messages.MessageBusConnection;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.util.List;
 
 public class DWBulkFileListener implements ApplicationComponent, BulkFileListener {
@@ -69,11 +70,12 @@ public class DWBulkFileListener implements ApplicationComponent, BulkFileListene
                         if (CurrentModuleType instanceof DWModuleType) {
                             for (VirtualFile sourceRoot : ModuleRootManager.getInstance(module).getSourceRoots()) {
                                 if (eventFile.getPath().contains(sourceRoot.getPath())) {
+                                    File file = new File(eventFile.getPath());
                                     ProgressManager.getInstance().run(
                                         new DWUpdateFileTask(
                                             project,
                                             module,
-                                            "Syncing files to: " + DWSettingsProvider.getInstance(module).getHostname(),
+                                            "Syncing file (" + file.getName() + ") to: " + DWSettingsProvider.getInstance(module).getHostname(),
                                             true,
                                             PerformInBackgroundOption.ALWAYS_BACKGROUND,
                                             sourceRoot.getPath(),
