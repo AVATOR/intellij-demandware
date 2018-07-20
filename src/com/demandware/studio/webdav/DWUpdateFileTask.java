@@ -64,7 +64,8 @@ public class DWUpdateFileTask extends Task.Backgroundable {
         indicator.setFraction(.33);
 
         HttpUriRequest getRequest = RequestBuilder.create("HEAD").setUri(remoteFilePath).build();
-        try (CloseableHttpResponse response = httpClient.execute(getRequest, context)) {
+        try {
+            CloseableHttpResponse response = httpClient.execute(getRequest, context);
             if (response.getStatusLine().getStatusCode() == 200) {
                 isNewRemoteFile = false;
             }
@@ -92,7 +93,7 @@ public class DWUpdateFileTask extends Task.Backgroundable {
                 try (CloseableHttpResponse response = httpClient.execute(mkcolRequest, context)) {
                     if (response.getStatusLine().getStatusCode() == 201) {
                         Date now = new Date();
-                        consoleView.print("[" + timeFormat.format(now) + "] " + "Created " + mkcolRequest.getURI().toString() + "\n", ConsoleViewContentType.NORMAL_OUTPUT);
+                        consoleView.print("[" + timeFormat.format(now) + "] " + "Created folder " + mkcolRequest.getURI().toString() + "\n", ConsoleViewContentType.NORMAL_OUTPUT);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -102,20 +103,25 @@ public class DWUpdateFileTask extends Task.Backgroundable {
 
         indicator.setFraction(.80);
 
+        File file = new File(localFilePath);
         // Put remote file
         HttpUriRequest request = RequestBuilder.create("PUT")
             .setUri(remoteFilePath)
-            .setEntity(new FileEntity(new File(localFilePath)))
+            .setEntity(new FileEntity(file))
             .build();
 
+
+
         try (CloseableHttpResponse response = httpClient.execute(request, context)) {
+            Date now = new Date();
+            String message = "[" + timeFormat.format(now) + "] ";
+
             if (isNewRemoteFile) {
-                Date now = new Date();
-                consoleView.print("[" + timeFormat.format(now) + "] " + "Created file in server " + request.getURI().toString() + "\n", ConsoleViewContentType.NORMAL_OUTPUT);
+                message += "Created file (" + file.getName() + ") in server " + request.getURI().toString();
             } else {
-                Date now = new Date();
-                consoleView.print("[" + timeFormat.format(now) + "] " + "Updated file in server " + request.getURI().toString() + "\n", ConsoleViewContentType.NORMAL_OUTPUT);
+                message += "Updated file (" + file.getName() + ") in server " + request.getURI().toString();
             }
+            consoleView.print(message + "\n", ConsoleViewContentType.NORMAL_OUTPUT);
         } catch (IOException e) {
             LOG.error(e);
         }
